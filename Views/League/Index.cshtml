@@ -1,0 +1,58 @@
+﻿@model List<League>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Leagues</h1>
+
+<a asp-action="Create" class="btn btn-primary">Create New League</a>
+
+@if (TempData["NumberOfClubsError"] != null)
+{
+    <p class="text-danger">@TempData["NumberOfClubsError"]</p>
+}
+
+@if (Model.Count < 1)
+{
+    <p>No leagues created so far!</p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    League Name
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @if (item.Started == false)
+                        {
+                            <a asp-controller="Club" asp-action="EditClubs" asp-route-id="@item.Id">Edit Clubs</a>
+                        }
+                        @if (item.Started == false)
+                        {
+                            <a asp-controller="League" asp-action="Start" asp-route-id="@item.Id">Start League</a>
+                        }
+                        @if (item.Started == true)
+                        {
+                            <a asp-controller="League" asp-action="View" asp-route-id="@item.Id">View League</a>
+                        }
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

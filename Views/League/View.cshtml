@@ -1,0 +1,50 @@
+﻿@model List<Match>
+@{
+    ViewData["Title"] = "Match Schedule";
+}
+
+<h1>Table</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Played</th>
+            <th>Won</th>
+            <th>Draw</th>
+            <th>Lost</th>
+            <th><b>Points</b></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.ClubsInLeague)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.MatchesPlayed</td>
+                <td>@item.Win</td>
+                <td>@item.Draw</td>
+                <td>@item.Loss</td>
+                <td><b>@item.Points</b></td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+<h1>Match Schedule</h1>
+
+@for (int i = 1; i < ViewBag.NumberOfRounds; i++)
+{
+    <h3>Round @i</h3>
+
+    @foreach (var item in Model)
+    {
+        @if (item.Round == i)
+        {
+            <p>@item.MatchTime.ToShortDateString() @item.MatchTime.ToShortTimeString() @item.ClubName1 vs @item.ClubName2 @item.ScoreTeamOne : @item.ScoreTeamTwo <a asp-action="Edit" asp-controller="Match" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a></p>
+        }
+    }
+}
+

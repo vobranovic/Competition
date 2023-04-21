@@ -1,0 +1,46 @@
+﻿@model List<Club>
+
+@{
+    ViewData["Title"] = "EditClubs";
+}
+
+<h1>Edit Clubs</h1>
+
+<p>
+    <a asp-action="Add" asp-route-id="@ViewBag.LeagueId" class="btn btn-primary">Add New</a>
+</p>
+
+@if (Model.Count < 1)
+{
+    <p>No clubs added to this league yet!</p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Club Name
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Remove" asp-route-id="@item.Id">Remove</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="Index" asp-controller="League" class="btn btn-secondary">Back to Leagues</a>
+
